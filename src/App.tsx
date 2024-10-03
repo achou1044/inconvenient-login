@@ -5,42 +5,61 @@ const App: React.FC = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [rand, setRand] = String.fromCharCode(Math.floor(Math.random() * (126 - 33)) + 33)
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (name && password) {
       setIsLoggedIn(true);
     }
   };
+
+  // resets the username and password
+  const handleReset = () => {
+    setName("")
+    setPassword("")
+  };
+
+  // should show a random number for the user to accept, currently just fills in the username and password
+  const randomGen = () => {
+    //setRand(String.fromCharCode(Math.floor(Math.random() * (126 - 33)) + 33))
+    setName(name + String.fromCharCode(Math.floor(Math.random() * (126 - 33)) + 33))
+    setPassword(name + String.fromCharCode(Math.floor(Math.random() * (126 - 33)) + 33))
+  }
 
   return (
     <div className="App">
       {isLoggedIn ? (
         <h1>Welcome, {name}! You have successfully logged in.</h1>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <h1>Login</h1>
+
           <div>
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">.--. .- ... ... .-- --- .-. -..:</label>
             <input
               type="password"
               id="password"
+              disabled={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+
+            <div>
+              <label htmlFor="name">..- ... . .-. -. .- -- .</label>
+              <input
+                type="text"
+                id="name"
+                disabled={true}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
           </div>
-          <button type="submit">Enter</button>
+          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleReset}>Delete</button>
+          <button onClick={randomGen}>Enter</button>
         </form>
       )}
     </div>
